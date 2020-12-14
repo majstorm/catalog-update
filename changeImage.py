@@ -4,7 +4,7 @@ from os import listdir
 from os.path import isfile, join
 import unittest
 
-PATH = "~/supplier-data/images/"
+PATH = "/home/student-00-8e7de78efaaa/supplier-data/images/"
 
 class TestImageTransform(unittest.TestCase):
     def test_bad_file(self):
@@ -15,18 +15,16 @@ class TestImageTransform(unittest.TestCase):
 def image_transform(img_src, img_path=""):
     try:
         img = Image.open(join(img_path,img_src))
+        img_res = img.resize((600,400))
+        print(join(img_path, img_src[:-5]))
+        img_res.convert('RGB').save(join(img_path,img_src[:-5])+".jpeg", "jpeg")
     except:
-        return("Not an Image")
-    img_res = img.resize((600,400))
-    try:
-        img_res.convert('RGB').save(img_src, "jpeg")
-    except:
-        return("Could not save image")
-    return "Image saved successfuly!"
-    
+        print("Could not save image")
+    print("Image saved successfuly!")
+
 
 if __name__=="__main__":
-    unittest.main()
+    #unittest.main()
     for file_img in listdir(PATH):
         if isfile(join(PATH,file_img)):
             image_transform(file_img,PATH)
